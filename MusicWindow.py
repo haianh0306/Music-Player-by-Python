@@ -48,7 +48,7 @@ class MainWindow(QMainWindow):
         self.load_playlist_from_data()
 
 ############################### function #################################
-
+    @Slot()
     def load_playlist_from_data(self):
         fileName = self.playlist_from_data[0]
         self.player.setSource(QUrl.fromLocalFile(fileName))
@@ -56,7 +56,7 @@ class MainWindow(QMainWindow):
         song=ntpath.basename(fileName)
         self.ui.NowPlaying.setText(song[0:len(song)-4])
 
-    
+    @Slot()
     def open_music(self):
         fileName,_=QFileDialog.getOpenFileName(self,"ADD FILE")
         if fileName !='':
@@ -69,7 +69,8 @@ class MainWindow(QMainWindow):
             self.ui.NowPlaying.setText(song[0:len(song)-4])
 
             # print(self.playlist[-1])
-
+    
+    @Slot()
     def play_music(self):
         if self.state==False:
             self.player.play()
@@ -79,6 +80,33 @@ class MainWindow(QMainWindow):
             self.player.pause()
             self.state=False
             self.ui.button_play.setIcon(QIcon("feather/play-circle.svg"))
+
+#####################################################################################
+    @Slot()
+    def next_song(self):
+        self.player.pause()
+        if self.playlist_index < len(self.playlist_from_data) - 1:
+            self.playlist_index += 1
+            self.player.setSource(QUrl.fromLocalFile(self.playlist_from_data[self.playlist_index]))
+            song=ntpath.basename(self.playlist_from_data[self.playlist_index])
+            self.ui.NowPlaying.setText(song[0:len(song)-4])
+
+            self.play_music()
+
+    def previous_song(self):
+        if self.player.position() <= 5000 and self.playlist_index > 0:
+            self.playlist_index -= 1
+            self.playlist_from_data.previous()
+            self.player.setSource(QUrl.fromLocalFile(self.playlist_from_data[self.playlist_index]))
+            song=ntpath.basename(self.playlist_from_data[self.playlist_index])
+            self.ui.NowPlaying.setText(song[0:len(song)-4])
+
+            self.play_music()
+
+        else:
+            self.player.setPosition(0)
+
+#####################################################################################
 
     def position_changed(self,position):
         if (self.ui.slider_music.maximum() !=self.player.duration()):
@@ -122,26 +150,7 @@ class MainWindow(QMainWindow):
             self.muted=True
 
 
-#####################################################################################
-    @Slot()
-    def next_song(self):
-        self.player.pause()
-        if self.playlist_index < len(self.playlist_from_data) - 1:
-            self.playlist_index += 1
-            self.player.setSource(self.playlist_from_data[self.playlist_index])
 
-            self.play_music()
-
-    def previous_song(self):
-        if self.player.position() <= 5000 and self.playlist_index > 0:
-            self.playlist_index -= 1
-            self.playlist.previous()
-            self.player.setSource(QUrl.fromLocalFile(self.playlist[self.playlist_index]))
-
-        else:
-            self.player.setPosition(0)
-
-#####################################################################################
 
 app=QApplication(sys.argv)
 window=MainWindow()
