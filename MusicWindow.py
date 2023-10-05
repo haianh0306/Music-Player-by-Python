@@ -108,6 +108,15 @@ class MainWindow(QMainWindow):
         else:
             self.player.setPosition(0)
 
+    def auto_change_song(self):
+        if self.ui.slider_music.value() == self.player.duration():
+            if self.playlist_index < len(self.playlist_from_data) - 1:
+                self.playlist_index += 1
+                self.player.setSource(QUrl.fromLocalFile(self.playlist_from_data[self.playlist_index]))
+                song=ntpath.basename(self.playlist_from_data[self.playlist_index])
+                self.ui.NowPlaying.setText(song[0:len(song)-4])
+                self.player.play()
+
 #####################################################################################
 
     def position_changed(self,position):
