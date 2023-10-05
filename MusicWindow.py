@@ -90,18 +90,20 @@ class MainWindow(QMainWindow):
             self.player.setSource(QUrl.fromLocalFile(self.playlist_from_data[self.playlist_index]))
             song=ntpath.basename(self.playlist_from_data[self.playlist_index])
             self.ui.NowPlaying.setText(song[0:len(song)-4])
-
-            self.play_music()
-
+            self.player.play()
+            # self.play_music()
+    
+    @Slot()
     def previous_song(self):
         if self.player.position() <= 5000 and self.playlist_index > 0:
             self.playlist_index -= 1
-            self.playlist_from_data.previous()
+            # self.playlist_from_data.previous()
             self.player.setSource(QUrl.fromLocalFile(self.playlist_from_data[self.playlist_index]))
             song=ntpath.basename(self.playlist_from_data[self.playlist_index])
             self.ui.NowPlaying.setText(song[0:len(song)-4])
+            self.player.play()
 
-            self.play_music()
+            # self.play_music()
 
         else:
             self.player.setPosition(0)
