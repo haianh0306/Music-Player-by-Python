@@ -18,7 +18,7 @@ class MainWindow(QMainWindow):
         self.muted=True
         self.ui.button_play.setEnabled(False)
         
-        self.playlist_from_data = json.load(open("D:\\Workspace\\Python\\BTL\\Music Player\\data.json", "r+"))["songs"]
+        self.playlist_from_data = json.load(open("data.json", "r+"))["songs"]
         self.playlist = []
         self.playlist_index = -1
 
@@ -88,9 +88,11 @@ class MainWindow(QMainWindow):
         seconds_pass=(position/1000)%60
         minutes_pass=(position/60000)%60
         hours_pass=(position/2600000)%24
+
         seconds_remain=((self.player.duration()-position)/1000)%60
         minutes_remain=((self.player.duration()-position)/60000)%60
         hours_remain = ((self.player.duration()-position) / 2600000) % 24
+
         time_pass=QTime(hours_pass,minutes_pass,seconds_pass)
         time_remain=QTime(hours_remain,minutes_remain,seconds_remain)
         self.ui.timepassed.setText(time_pass.toString())
