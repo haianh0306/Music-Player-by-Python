@@ -1,0 +1,29 @@
+{
+    "temp": {
+        "path": "pathname",
+        "name": "name",
+        "author": "",
+        "singer": "",
+        "views": "of type int, default = 0, for use in dailymix(?) wip",
+        "dailymix": "of type boolean",
+        "shuffleorder": "int, value given using shuff()"
+    },
+    "other song": {
+        "path": "abcd",
+        "name": "darude - sandstorm1",
+        "author": "darude",
+        "singer": "1",
+        "views": 0,
+        "dailymix": false,
+        "shuffleorder": 2
+    },
+    "another song...": {
+        "path": "abcd",
+        "name": "darude - sandstorm2",
+        "author": "darude",
+        "singer": "2",
+        "views": 0,
+        "dailymix": true,
+        "shuffleorder": 0
+    }
+}
